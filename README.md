@@ -2,18 +2,53 @@
 
 Visualizzatore di formulari digitali XFIR per Windows, con anteprima, esportazione PDF e stampa.
 
-Il progetto è in fase iniziale di progettazione: non sono ancora disponibili un'applicazione eseguibile o una release.
+È disponibile un primo prototipo in C# / .NET 10 e WPF. Legge un XFIR locale, genera un PDF A4 e lo mostra nell'applicazione, con comandi per esportazione e stampa. Non è ancora un prodotto certificato per lo Store o un validatore completo RENTRI.
 
-Le funzioni previste sono:
+Le funzioni implementate sono:
 
-- Apertura di file `.xfir`, anche tramite trascinamento e associazione in Windows.
+- Apertura di file `.xfir` da finestra, trascinamento o argomento della riga di comando.
 - Lettura locale del contenitore ASiC-E e dei dati XML.
 - Rappresentazione del formulario con impaginazione vicina al modello RENTRI.
 - Anteprima, esportazione PDF e stampa dello stesso documento.
-- Visualizzazione di soggetti, tratte, eventi, firme e allegati.
+- Riepilogo del formulario, tabella dei dati originali, informazioni sulle firme ed elenco degli allegati.
 - Controlli di struttura con indicazione esplicita dei limiti di validazione.
 
-Lo stack proposto è C# con .NET 10 LTS e WPF, PDFsharp per la generazione del PDF, WebView2 per l'anteprima e MSIX per la distribuzione Windows. La pubblicazione nel Microsoft Store è un obiettivo del progetto.
+Lo stack è C# con .NET 10 LTS e WPF, PDFsharp per il PDF, QRCoder per il QR e WebView2 per l'anteprima. Il packaging MSIX, l'associazione `.xfir` e la pubblicazione nel Microsoft Store sono passi successivi.
+
+## Avvio e compilazione
+
+Sono necessari Windows, SDK .NET 10 per compilare e Microsoft Edge WebView2 Runtime per anteprima e stampa integrate. In assenza di WebView2 rimane possibile esportare il PDF.
+
+```powershell
+dotnet restore xFirW.slnx --locked-mode
+dotnet build xFirW.slnx -c Release --no-restore -m:1
+dotnet test tests/Xfir.Tests -c Release --no-restore -m:1
+dotnet run --project src/Xfir.App -- "C:\documenti\esempio.xfir"
+```
+
+Per generare un PDF da riga di comando (senza sovrascrivere file esistenti):
+
+```powershell
+dotnet run --project src/Xfir.Cli -- "C:\documenti\esempio.xfir" "C:\documenti\copia.pdf"
+```
+
+Per produrre una cartella eseguibile su PC con .NET Desktop Runtime 10 già installato:
+
+```powershell
+dotnet publish src/Xfir.App -c Release --no-restore -o artifacts/xFirW
+```
+
+La cartella deve essere distribuita per intero, inclusi licenza e avvisi di terzi. Il workflow GitHub Actions compila, esegue i test e prepara lo stesso pacchetto come artefatto.
+
+## Limiti del prototipo
+
+- Il modello principale copre un trasporto terrestre e la prima accettazione. Gli eventi aggiuntivi vengono riportati in un'appendice dati, con avviso di rappresentazione parziale.
+- I testi troppo lunghi proseguono in appendice anziché essere eliminati.
+- I codici EER sono formattati senza aggiungere l'asterisco di pericolosità: il repertorio EER completo non è ancora incluso. Le classi HP presenti restano visibili. Non vengono dedotte province o descrizioni estese delle autorizzazioni.
+- Non sono eseguite validazione XSD, verifica completa XAdES, controllo delle revoche o interrogazioni RENTRI. Il QR viene riprodotto dai byte presenti, senza verificarne la firma COSE.
+- Gli allegati PDF sono elencati ma non ancora apribili/esportabili dall'interfaccia, né inclusi nella stampa del formulario.
+- La copia PDF non è firmata digitalmente e non sostituisce il file XFIR originale.
+- Il prototipo non salva una cronologia dei documenti. I PDF temporanei sono eliminati alla chiusura regolare della sessione, quando non bloccati da altri processi.
 
 L'apertura e la rappresentazione dei documenti sono progettate per funzionare localmente, senza richiedere un account RENTRI. La verifica completa delle firme e dello stato online del formulario è una funzionalità distinta dalla visualizzazione.
 

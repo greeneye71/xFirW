@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Xfir.App/Xfir.App.csproj" />
+    <Project Path="src/Xfir.Cli/Xfir.Cli.csproj" />
+    <Project Path="src/Xfir.Core/Xfir.Core.csproj" />
+    <Project Path="src/Xfir.Rendering/Xfir.Rendering.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Xfir.Tests/Xfir.Tests.csproj" />
+  </Folder>
+</Solution>

@@ -14,6 +14,9 @@ output/
 *.xfir
 *.pdf
 tmp/
+.tools/
+.packages/
+.dotnet-home/
 samples/private/
 
 # Credentials and signing material

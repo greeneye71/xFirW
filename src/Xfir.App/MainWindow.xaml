@@ -1,0 +1,90 @@
+<Window x:Class="Xfir.App.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:wv="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+        Title="xFirW · Formulari digitali" Width="1320" Height="920" MinWidth="980" MinHeight="650"
+        WindowStartupLocation="CenterScreen" Background="#EDF2F8" FontFamily="Segoe UI" Foreground="#172C46"
+        AllowDrop="True" DragOver="OnDragOver" Drop="OnDrop" Loaded="OnLoaded" Closed="OnClosed">
+  <Window.InputBindings>
+    <KeyBinding Key="O" Modifiers="Control" Command="Open" />
+    <KeyBinding Key="S" Modifiers="Control" Command="SaveAs" />
+    <KeyBinding Key="P" Modifiers="Control" Command="Print" />
+  </Window.InputBindings>
+  <Window.CommandBindings>
+    <CommandBinding Command="Open" Executed="OnOpen" CanExecute="CanOpen" />
+    <CommandBinding Command="SaveAs" Executed="OnExport" CanExecute="CanExport" />
+    <CommandBinding Command="Print" Executed="OnPrint" CanExecute="CanPrint" />
+  </Window.CommandBindings>
+  <Grid>
+    <Grid.RowDefinitions><RowDefinition Height="78" /><RowDefinition Height="64" /><RowDefinition Height="*" /><RowDefinition Height="34" /></Grid.RowDefinitions>
+    <Border Background="#132A47" Padding="26,16">
+      <Grid>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+          <Border Background="#3269BD" CornerRadius="9" Width="44" Height="44" Margin="0,0,14,0">
+            <TextBlock Text="xF" Foreground="White" FontWeight="SemiBold" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center" />
+          </Border>
+          <StackPanel><TextBlock Text="xFirW" Foreground="White" FontSize="24" FontWeight="SemiBold" />
+            <TextBlock Text="FORMULARI DIGITALI" Foreground="#AFC3DF" FontSize="10" /></StackPanel>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center">
+          <TextBlock Text="Consultazione locale" Foreground="#DEEBFC" FontSize="13" HorizontalAlignment="Right" />
+          <TextBlock Text="I documenti restano sul tuo computer" Foreground="#AFC3DF" FontSize="11" Margin="0,4,0,0" />
+        </StackPanel>
+      </Grid>
+    </Border>
+    <Border Grid.Row="1" Background="White" BorderBrush="#DBE3EF" BorderThickness="0,0,0,1" Padding="22,11">
+      <Grid><StackPanel Orientation="Horizontal">
+        <Button Content="Apri XFIR" Command="Open" Background="#2359AD" Foreground="White" BorderBrush="#2359AD" ToolTip="Apri un formulario (Ctrl+O)" />
+        <Button Content="Esporta PDF" Command="SaveAs" ToolTip="Salva una copia PDF (Ctrl+S)" />
+        <Button Content="Stampa" Command="Print" ToolTip="Stampa il PDF visualizzato (Ctrl+P)" />
+      </StackPanel><Button Content="Informazioni" Click="OnAbout" HorizontalAlignment="Right" Margin="0" /></Grid>
+    </Border>
+    <Grid Grid.Row="2" Margin="18,18,18,12">
+      <Grid.ColumnDefinitions><ColumnDefinition Width="280" /><ColumnDefinition Width="16" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
+      <Border Background="White" CornerRadius="10" BorderBrush="#DAE3EE" BorderThickness="1">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+          <StackPanel Margin="20">
+            <TextBlock Text="IL FORMULARIO" Foreground="#68798E" FontSize="11" />
+            <TextBlock x:Name="NumberLabel" Text="Nessun file aperto" FontSize="23" FontWeight="SemiBold" Margin="0,10,0,12" TextWrapping="Wrap" />
+            <Border Background="#EDF3FC" CornerRadius="5" Padding="10"><TextBlock x:Name="StateLabel" Text="Apri o trascina un file .xfir" Foreground="#2359AD" TextWrapping="Wrap" FontSize="12" /></Border>
+            <TextBlock Text="PRODUTTORE" Style="{StaticResource Caption}" /><TextBlock x:Name="ProducerLabel" Text="—" Style="{StaticResource Detail}" />
+            <TextBlock Text="DESTINATARIO" Style="{StaticResource Caption}" /><TextBlock x:Name="RecipientLabel" Text="—" Style="{StaticResource Detail}" />
+            <TextBlock Text="CODICE EER" Style="{StaticResource Caption}" /><TextBlock x:Name="WasteLabel" Text="—" Style="{StaticResource Detail}" />
+            <TextBlock Text="QUANTITÀ IN PARTENZA" Style="{StaticResource Caption}" /><TextBlock x:Name="QuantityLabel" Text="—" FontSize="26" FontWeight="SemiBold" />
+            <Border BorderBrush="#E1E8F1" BorderThickness="0,1,0,0" Margin="0,22,0,0" Padding="0,14,0,0">
+              <StackPanel><TextBlock Text="Verifiche" FontWeight="SemiBold" FontSize="13" />
+                <TextBlock Text="Controlli di lettura del contenitore. Validazione XSD e verifica completa delle firme non eseguite." TextWrapping="Wrap" Foreground="#68798E" FontSize="12" Margin="0,7,0,0" />
+                <TextBlock x:Name="WarningLabel" TextWrapping="Wrap" Foreground="#915514" FontSize="12" Margin="0,10,0,0" />
+              </StackPanel>
+            </Border>
+            <TextBlock Text="FILE ORIGINALE" Style="{StaticResource Caption}" /><TextBlock x:Name="FileLabel" Text="—" TextWrapping="Wrap" Foreground="#68798E" FontSize="11" />
+          </StackPanel>
+        </ScrollViewer>
+      </Border>
+      <Border Grid.Column="2" Background="White" CornerRadius="10" BorderBrush="#DAE3EE" BorderThickness="1" Padding="8">
+        <Grid>
+          <TabControl x:Name="Tabs" Background="White" BorderThickness="0">
+            <TabItem Header="Anteprima PDF">
+              <Grid Background="#E8EDF4">
+                <wv:WebView2 x:Name="Preview" Visibility="Collapsed" />
+                <StackPanel x:Name="EmptyPanel" HorizontalAlignment="Center" VerticalAlignment="Center" MaxWidth="430" Margin="30">
+                  <TextBlock Text="Il tuo formulario, leggibile." FontSize="26" FontWeight="SemiBold" TextAlignment="Center" TextWrapping="Wrap" />
+                  <TextBlock x:Name="EmptyMessage" Text="Trascina qui un file XFIR oppure scegli Apri XFIR. Troverai il documento pronto per la consultazione, l'esportazione e la stampa." FontSize="15" Foreground="#68798E" TextAlignment="Center" TextWrapping="Wrap" Margin="0,16,0,24" />
+                  <Button Content="Scegli un file XFIR" Command="Open" HorizontalAlignment="Center" Background="#2359AD" Foreground="White" />
+                </StackPanel>
+              </Grid>
+            </TabItem>
+            <TabItem Header="Dati originali">
+              <DataGrid x:Name="DataGrid" IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False" GridLinesVisibility="Horizontal" HeadersVisibility="Column" BorderThickness="0" EnableRowVirtualization="True">
+                <DataGrid.Columns><DataGridTextColumn Header="File / campo" Binding="{Binding Field}" Width="*" /><DataGridTextColumn Header="Valore" Binding="{Binding Value}" Width="*" /></DataGrid.Columns>
+              </DataGrid>
+            </TabItem>
+            <TabItem Header="Firme e allegati">
+              <ScrollViewer VerticalScrollBarVisibility="Auto"><TextBox x:Name="SignaturesText" IsReadOnly="True" TextWrapping="Wrap" BorderThickness="0" Background="White" Padding="18" FontSize="13" Text="Apri un formulario per consultare le firme e gli allegati presenti." /></ScrollViewer>
+            </TabItem>
+          </TabControl>
+        </Grid>
+      </Border>
+    </Grid>
+    <Grid Grid.Row="3" Margin="24,0"><TextBlock x:Name="StatusLabel" Text="Pronto · Ctrl+O per aprire un formulario" VerticalAlignment="Center" Foreground="#68798E" FontSize="11" />
+      <TextBlock Text="0.1 · PROTOTIPO · AGPL-3.0" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="#68798E" FontSize="10" /></Grid>
+  </Grid>
+</Window>
