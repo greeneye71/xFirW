@@ -1,0 +1,29 @@
+name: Segnalazione volontaria di uso commerciale
+description: Racconta come utilizzi xFirW nel tuo progetto commerciale. Non è un obbligo di licenza.
+title: "[Uso commerciale] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Grazie per condividere il tuo utilizzo di xFirW.
+        Questa segnalazione è volontaria: l'uso commerciale non richiede autorizzazione
+        o una risposta del mantenitore, e rimane soggetto alla AGPL-3.0-only.
+        La issue è pubblica. Non inserire dati riservati, formulari reali o dati di clienti.
+  - type: input
+    id: project
+    attributes:
+      label: Nome del progetto o dell'organizzazione
+      description: Indica soltanto un nome che desideri rendere pubblico.
+    validations:
+      required: true
+  - type: input
+    id: website
+    attributes:
+      label: Sito pubblico (facoltativo)
+  - type: textarea
+    id: usage
+    attributes:
+      label: Come utilizzi xFirW
+      description: Una breve descrizione dell'utilizzo è sufficiente.
+    validations:
+      required: true

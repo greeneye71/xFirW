@@ -1,0 +1,35 @@
+# Build and IDE files
+**/bin/
+**/obj/
+.vs/
+.idea/
+*.user
+*.suo
+TestResults/
+artifacts/
+output/
+
+# Local analysis and real-world documents: never publish as test fixtures
+/ANALISI-E-PROPOSTA.md
+*.xfir
+*.pdf
+tmp/
+samples/private/
+
+# Credentials and signing material
+.env
+.env.*
+!.env.example
+*.pfx
+*.p12
+*.key
+*.snk
+
+# Local automation settings
+.codex/
+.agents/
+
+# OS files
+Thumbs.db
+Desktop.ini
+.DS_Store
