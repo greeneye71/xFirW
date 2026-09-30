@@ -7,6 +7,7 @@ internal static class AppInfo
 {
     public const string Author = "Studio ing. Giovanni Bergamaschi";
     public const string ContactEmail = "info@studiobergamaschi.net";
+    public const string Website = "https://www.studiobergamaschi.net";
 
     // Bump when the text changes materially: users must accept the new wording again.
     public const int DisclaimerRevision = 3;

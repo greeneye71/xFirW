@@ -10,8 +10,10 @@
     <Border Background="#EDF3FC" CornerRadius="8" Padding="18" Margin="0,22,0,20">
       <StackPanel>
         <TextBlock Text="AUTORE E CONTATTI" Foreground="#68798E" FontSize="10" />
-        <TextBlock x:Name="AuthorLabel" FontSize="17" FontWeight="SemiBold" TextWrapping="Wrap" Margin="0,7,0,6" />
+        <TextBlock x:Name="AuthorLabel" FontSize="17" FontWeight="SemiBold" TextWrapping="Wrap" Margin="0,7,0,2" />
+        <TextBlock Text="Parma, Italia" Foreground="#68798E" FontSize="13" Margin="0,0,0,6" />
         <TextBox x:Name="EmailLabel" IsReadOnly="True" BorderThickness="0" Background="Transparent" Foreground="#2359AD" FontSize="14" Padding="0" />
+        <TextBox x:Name="WebsiteLabel" IsReadOnly="True" BorderThickness="0" Background="Transparent" Foreground="#2359AD" FontSize="14" Padding="0" Margin="0,2,0,0" />
       </StackPanel>
     </Border>
     <TextBlock Text="Copyright © 2026 Giovanni Bergamaschi e contributori" FontSize="12" TextWrapping="Wrap" />

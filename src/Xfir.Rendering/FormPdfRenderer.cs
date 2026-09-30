@@ -201,7 +201,7 @@ public sealed class FormPdfRenderer
         Cell("Dati firma destinatario", "", 300, 607, 261, 35);
         Section("17", "ANNOTAZIONI (SEGUE)", 652, 112);
         if (form.AdditionalParts.Count > 0)
-            Text("Gli eventi integrativi presenti nell'XFIR sono riportati nell'appendice dati delle pagine successive. I riquadri di questo foglio non sono compilati dal prototipo.", 34, 673, 427, 55, 9, true);
+            Text("Gli eventi integrativi presenti nell'XFIR sono riportati nell'appendice dati delle pagine successive. I riquadri di questo foglio non sono compilati da xFirW.", 34, 673, 427, 55, 9, true);
         Endorsement(767, qrTop: 688);
     }
 
