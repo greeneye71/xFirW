@@ -87,13 +87,14 @@ public sealed class XfirReader
 
         var parts = new List<XmlPart>();
         var signatures = new List<SignatureInfo>();
-        foreach (var (name, bytes) in files.Where(f => f.Key.EndsWith(".xml", StringComparison.OrdinalIgnoreCase) && f.Key != "META-INF/manifest.xml"))
+        foreach (var (name, bytes) in files.Where(f => f.Key.EndsWith(".xml", StringComparison.OrdinalIgnoreCase) && !f.Key.Equals("META-INF/manifest.xml", StringComparison.OrdinalIgnoreCase)))
         {
             var root = ParseXml(bytes);
             foreach (var signature in root.DescendantsAndSelf(Ds + "Signature"))
             {
                 var references = signature.Element(Ds + "SignedInfo")?.Elements(Ds + "Reference").Select(r => r.Attribute("URI")?.Value ?? "").ToList() ?? [];
-                foreach (var reference in references.Where(r => !r.StartsWith('#')))
+                // URI="" signs the enclosing document and "#id" an element inside it: neither names a container file.
+                foreach (var reference in references.Where(r => r.Length > 0 && !r.StartsWith('#')))
                 {
                     var target = Uri.UnescapeDataString(reference);
                     CheckPath(target);
@@ -159,7 +160,7 @@ public sealed class XfirReader
         if (qr is null || qr.Length == 0) { qr = null; warnings.Add("QR di vidimazione assente: la copia non contiene il QR originale."); }
         else if (qr.Length > 1024) throw new XfirReadException("Dati QR troppo grandi per una rappresentazione affidabile.");
         var attachments = files.Where(f => f.Key.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase)).Select(f => new AttachmentInfo(f.Key, f.Value.Length)).ToList();
-        foreach (var unknown in files.Keys.Where(n => !n.EndsWith(".xml", StringComparison.OrdinalIgnoreCase) && !n.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase) && n != "mimetype" && n != cborName))
+        foreach (var unknown in files.Keys.Where(n => !n.EndsWith(".xml", StringComparison.OrdinalIgnoreCase) && !n.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase) && n != "mimetype" && !n.Equals(cborName, StringComparison.OrdinalIgnoreCase)))
             warnings.Add("Elemento non rappresentato: " + unknown);
         if (attachments.Count > 0) warnings.Add("Sono presenti allegati PDF: elencati nei dettagli, non inclusi nella stampa del formulario.");
         return new FormDocument

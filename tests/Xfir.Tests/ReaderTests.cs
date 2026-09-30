@@ -119,6 +119,19 @@ public class ReaderTests
         Assert.Throws<XfirReadException>(() => new XfirReader().Read(bytes));
     }
 
+    [Fact]
+    public void AcceptsSignatureOverEnclosingDocument()
+    {
+        const string signature = "<ds:Signature xmlns:ds='http://www.w3.org/2000/09/xmldsig#'><ds:SignedInfo>"
+            + "<ds:Reference URI=''/><ds:Reference URI='#props'/><ds:Reference URI='partenza.xml'/></ds:SignedInfo></ds:Signature>";
+        var form = new XfirReader().Read(Sample(extraName: "META-INF/signatures001.xml", extra: signature));
+        Assert.Equal(new[] { "", "#props", "partenza.xml" }, Assert.Single(form.Signatures).References);
+        Assert.DoesNotContain(form.Warnings, w => w.Contains("firma"));
+    }
+
+    [Fact]
+    public void FormatsDatesAsItalianDayMonthYear() => Assert.Equal("18/09/2026", FormFormatting.Date("2026-09-18"));
+
     private const string Departure = """
         <DatiPartenza xmlns="urn:it:rentri:formulari:1.0">
         <DataEmissione>2026-09-18</DataEmissione><NumeroFIR>TESTX 000001 AA</NumeroFIR>

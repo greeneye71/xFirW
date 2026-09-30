@@ -83,8 +83,10 @@ public sealed class FormPdfRenderer
             new XRect(-320, -32, 640, 64), XStringFormats.Center);
         g.Restore(state);
         Text(title, Left, 35, 315, 22, title.Length > 28 ? 10 : 13, true, color: Label);
-        Cell("DATA EMISSIONE", FormFormatting.Date(form.Departure?.Get("DataEmissione")), 354, 32, 83, 28, 10);
-        Cell("NUMERO FIR", form.Number, 443, 32, 124, 28, 11, true);
+        // The header repeats on every page: record its overflow once, before the appendix is assembled.
+        var firstPage = pdf.PageCount == 1;
+        Cell("DATA EMISSIONE", FormFormatting.Date(form.Departure?.Get("DataEmissione")), 354, 32, 83, 28, 10, track: firstPage);
+        Cell("NUMERO FIR", form.Number, 443, 32, 124, 28, 11, true, track: firstPage);
         if (form.IsPartial) Text("MODULO PARZIALE · Consultare l'appendice dati", Left, 60, Width, 10, 6.5, true, color: XBrushes.DarkRed);
     }
 
@@ -246,12 +248,12 @@ public sealed class FormPdfRenderer
         Text(name, Left + 34, y + 2, Width - 40, 10, 7, true, color: Label);
     }
 
-    private void Cell(string label, string value, double x, double y, double width, double height, double size = 7.5, bool bold = false)
+    private void Cell(string label, string value, double x, double y, double width, double height, double size = 7.5, bool bold = false, bool track = true)
     {
         g.DrawRectangle(new XPen(Border, .3), x, y, width, height);
         Text(label, x + 3, y + 1, width - 6, 8, 5.6, color: Label);
         var valueTop = height < 19 ? 7 : 9;
-        Text(value, x + 3, y + valueTop, width - 6, Math.Max(height - valueTop - 1, 7), size, bold, overflowTitle: label);
+        Text(value, x + 3, y + valueTop, width - 6, Math.Max(height - valueTop - 1, 7), size, bold, overflowTitle: track ? label : null);
     }
 
     private void Check(double x, double y, bool selected)

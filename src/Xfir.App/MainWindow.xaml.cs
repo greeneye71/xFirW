@@ -14,8 +14,9 @@ namespace Xfir.App;
 public partial class MainWindow : Window
 {
     private readonly string? initialFile;
-    private readonly string sessionPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "xFirW", "Preview", Guid.NewGuid().ToString("N"));
+    private readonly string sessionPath = Path.Combine(PreviewStorage.Root, Guid.NewGuid().ToString("N"));
     private readonly List<string> previewFiles = [];
+    private FileStream? sessionLock;
     private FormDocument? current;
     private byte[]? currentPdf;
     private Uri? currentPreview;
@@ -52,6 +53,7 @@ public partial class MainWindow : Window
         e.Handled = true;
         if (busy || e.Data.GetData(DataFormats.FileDrop) is not string[] files) return;
         if (files.Length != 1) { MessageBox.Show(this, "Apri un formulario alla volta.", "xFirW"); return; }
+        if (!files[0].EndsWith(".xfir", StringComparison.OrdinalIgnoreCase)) { MessageBox.Show(this, "Trascina un file .xfir.", "xFirW"); return; }
         await OpenFile(files[0]);
     }
     private async Task OpenFile(string path)
@@ -143,13 +145,14 @@ public partial class MainWindow : Window
                 Preview.CoreWebView2.NavigationCompleted += (_, e) =>
                 {
                     previewReady = e.IsSuccess;
+                    if (e.IsSuccess) RemoveStalePreviews();
                     StatusLabel.Text = e.IsSuccess ? "PDF pronto · " + (current?.Warnings.Count > 0 ? "Consulta le avvertenze" : "Lettura completata")
                         : "Anteprima non disponibile. Puoi esportare il PDF.";
                     CommandManager.InvalidateRequerySuggested();
                 };
                 browserInitialized = true;
             }
-            Directory.CreateDirectory(sessionPath);
+            sessionLock ??= PreviewStorage.CreateSession(sessionPath);
             var file = Path.Combine(sessionPath, Guid.NewGuid().ToString("N") + ".pdf");
             // Keep creation and registration together so closing the window cannot leave an untracked PDF.
             File.WriteAllBytes(file, pdf);
@@ -192,7 +195,14 @@ public partial class MainWindow : Window
         Preview.Dispose();
         foreach (var file in previewFiles)
             try { File.Delete(file); } catch (IOException) { } catch (UnauthorizedAccessException) { }
+        sessionLock?.Dispose();
         try { if (Directory.Exists(sessionPath)) Directory.Delete(sessionPath); } catch (IOException) { } catch (UnauthorizedAccessException) { }
+    }
+    // Only the displayed PDF is needed; earlier ones would otherwise accumulate until the window closes.
+    private void RemoveStalePreviews()
+    {
+        foreach (var file in previewFiles.Where(f => !string.Equals(f, currentPreview?.LocalPath, StringComparison.OrdinalIgnoreCase)).ToList())
+            try { File.Delete(file); previewFiles.Remove(file); } catch (IOException) { } catch (UnauthorizedAccessException) { }
     }
     private static string Value(string text) => string.IsNullOrWhiteSpace(text) ? "—" : text;
 }

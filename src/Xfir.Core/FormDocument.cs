@@ -67,14 +67,16 @@ public sealed class FormDocument
 public static class FormFormatting
 {
     private static readonly CultureInfo Italian = CultureInfo.GetCultureInfo("it-IT");
-    private static readonly TimeZoneInfo Rome = TimeZoneInfo.FindSystemTimeZoneById("W. Europe Standard Time");
+    // IANA ids need ICU on Windows; fall back to the Windows id when the conversion is unavailable.
+    private static readonly TimeZoneInfo Rome = TimeZoneInfo.TryFindSystemTimeZoneById("Europe/Rome", out var rome) ? rome
+        : TimeZoneInfo.FindSystemTimeZoneById("W. Europe Standard Time");
     public static string Quantity(string? value) => decimal.TryParse(value, NumberStyles.AllowLeadingSign | NumberStyles.AllowDecimalPoint,
         CultureInfo.InvariantCulture, out var number) ? number.ToString("0.############################", Italian) : value ?? "";
     public static string Date(string? value)
     {
         if (string.IsNullOrWhiteSpace(value)) return "";
         return DateOnly.TryParseExact(value, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var day)
-            ? day.ToString("dd/MM/yyyy") : LocalTime(value, "dd/MM/yyyy");
+            ? day.ToString("dd/MM/yyyy", Italian) :LocalTime(value, "dd/MM/yyyy");
     }
     public static string LocalTime(string? value, string format = "dd/MM/yyyy HH:mm")
     {

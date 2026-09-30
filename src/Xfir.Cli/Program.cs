@@ -3,10 +3,11 @@ using System.Text.Json;
 using Xfir.Core;
 using Xfir.Rendering;
 
-if (args.Length != 2 || args[0] is "--help" or "-h")
+var help = args is ["--help" or "-h"];
+if (help || args.Length != 2)
 {
     Console.WriteLine("Uso: Xfir.Cli <documento.xfir> <copia.pdf | --inspect>\nNon sovrascrive file esistenti.");
-    return args.Length == 1 ? 0 : 2;
+    return help ? 0 : 2;
 }
 try
 {
@@ -25,7 +26,7 @@ try
     }
     return 0;
 }
-catch (Exception e) when (e is XfirReadException or IOException or UnauthorizedAccessException or InvalidOperationException)
+catch (Exception e) when (e is XfirReadException or IOException or UnauthorizedAccessException or InvalidOperationException or ArgumentException or NotSupportedException)
 {
     Console.Error.WriteLine(e.Message);
     return 1;
