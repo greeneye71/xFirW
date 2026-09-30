@@ -9,5 +9,7 @@
     <PackageLicenseExpression>EUPL-1.2</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/greeneye71/xFirW</RepositoryUrl>
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <!-- Lock files also cover the self-contained win-x64 Store package. -->
+    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
   </PropertyGroup>
 </Project>

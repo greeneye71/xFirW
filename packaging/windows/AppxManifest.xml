@@ -10,18 +10,27 @@
   <Properties>
     <DisplayName>xFirW</DisplayName>
     <PublisherDisplayName>REPLACE_FROM_PARTNER_CENTER</PublisherDisplayName>
-    <Description>Visualizzatore di formulari digitali XFIR con esportazione PDF e stampa.</Description>
+    <Description>Visualizzatore gratuito e open source (EUPL-1.2) di formulari digitali XFIR, con esportazione PDF e stampa.</Description>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Resources><Resource Language="it-IT" /></Resources>
   <Dependencies>
-    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.22000.0" MaxVersionTested="10.0.26100.0" />
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.19041.0" MaxVersionTested="10.0.26100.0" />
   </Dependencies>
   <Applications>
     <Application Id="App" Executable="xFirW.exe" uap10:RuntimeBehavior="packagedClassicApp" uap10:TrustLevel="mediumIL">
       <uap:VisualElements DisplayName="xFirW" Description="Visualizzatore di formulari digitali XFIR"
                           Square150x150Logo="Assets\Square150x150Logo.png"
                           Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="#163C4A" />
+      <Extensions>
+        <!-- The path of the opened file arrives as the first command-line argument. -->
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="xfir">
+            <uap:DisplayName>Formulario digitale XFIR</uap:DisplayName>
+            <uap:SupportedFileTypes><uap:FileType>.xfir</uap:FileType></uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+      </Extensions>
     </Application>
   </Applications>
   <Capabilities><rescap:Capability Name="runFullTrust" /></Capabilities>

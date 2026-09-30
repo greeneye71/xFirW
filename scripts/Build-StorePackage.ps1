@@ -60,6 +60,9 @@ try {
 foreach ($required in @('xFirW.exe', 'coreclr.dll', 'hostfxr.dll', 'PresentationFramework.dll', 'LICENSE', 'LICENSE-IT.txt', 'THIRD-PARTY-NOTICES.md')) {
     if (-not (Test-Path -LiteralPath (Join-Path $layout $required))) { throw "Missing package component: $required" }
 }
+# User documents (real formulari, exported copies) must never be shipped inside the package.
+$documents = Get-ChildItem -LiteralPath $layout -Recurse -File | Where-Object { $_.Extension -in '.xfir', '.pdf' }
+if ($documents) { throw "Documents found in the package layout: $($documents.FullName -join ', ')" }
 
 # Simple vector-style document mark, rendered at each required size without external assets.
 Add-Type -AssemblyName System.Drawing

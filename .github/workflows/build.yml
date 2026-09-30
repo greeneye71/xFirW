@@ -13,6 +13,11 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Refuse real documents in the repository
+        shell: pwsh
+        run: |
+          $found = git ls-files -- '*.xfir' '*.XFIR' '*.pdf' '*.PDF'
+          if ($found) { throw "Real documents must not be committed: $found" }
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '10.0.x'
@@ -24,6 +29,11 @@ jobs:
         run: dotnet test tests/Xfir.Tests -c Release --no-build --no-restore --logger trx --results-directory artifacts/test-results
       - name: Publish prototype (requires .NET Desktop Runtime 10 and WebView2)
         run: dotnet publish src/Xfir.App -c Release --no-restore -o artifacts/xFirW
+      - name: Refuse documents in the published output
+        shell: pwsh
+        run: |
+          $found = Get-ChildItem artifacts/xFirW -Recurse -File | Where-Object { $_.Extension -in '.xfir', '.pdf' }
+          if ($found) { throw "Documents must not be distributed: $($found.FullName)" }
       - uses: actions/upload-artifact@v4
         with:
           name: xFirW-windows-prototype
