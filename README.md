@@ -66,6 +66,8 @@ Il codice e la documentazione originali del progetto sono distribuiti sotto la *
 
 Il software è gratuito e fornito «così com'è», senza garanzie e con l'esclusione di responsabilità prevista dagli articoli 7 e 8 della licenza. xFirW è soltanto uno strumento di visualizzazione e stampa: non sostituisce il formulario XFIR originale né i sistemi ufficiali RENTRI, sui quali l'utente deve verificare i dati.
 
+Il software è stato sviluppato con il supporto di strumenti di intelligenza artificiale generativa, sotto la supervisione dell'autore. xFirW non contiene né usa funzioni di intelligenza artificiale durante l'esecuzione.
+
 L'uso, anche commerciale, è consentito senza royalty e senza autorizzazione. Chi distribuisce versioni modificate, o ne rende disponibili online le funzionalità essenziali, deve farlo sotto EUPL-1.2 o una licenza compatibile elencata nell'appendice e rendere disponibile il codice sorgente. La licenza non impone di pubblicare modifiche private né di inviarle a questo repository.
 
 Se utilizzi xFirW in un progetto commerciale, ci farebbe piacere ricevere una [segnalazione volontaria](https://github.com/greeneye71/xFirW/issues/new?template=uso-commerciale.yml). È una richiesta di cortesia, non una condizione della licenza: non richiede approvazione e la mancata segnalazione non limita i diritti concessi. I dettagli sono in [COMMERCIAL_USE.md](COMMERCIAL_USE.md).
