@@ -9,6 +9,7 @@
     <ProjectReference Include="../Xfir.Rendering/Xfir.Rendering.csproj" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3537.50" />
     <Content Include="../../LICENSE" Link="LICENSE" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="../../LICENSE-IT.txt" Link="LICENSE-IT.txt" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="../../THIRD-PARTY-NOTICES.md" Link="THIRD-PARTY-NOTICES.md" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="../../third-party/*" Link="third-party/%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>

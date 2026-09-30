@@ -7,7 +7,7 @@ body:
       value: |
         Grazie per condividere il tuo utilizzo di xFirW.
         Questa segnalazione è volontaria: l'uso commerciale non richiede autorizzazione
-        o una risposta del mantenitore, e rimane soggetto alla AGPL-3.0-only.
+        o una risposta del mantenitore, e rimane soggetto alla EUPL-1.2.
         La issue è pubblica. Non inserire dati riservati, formulari reali o dati di clienti.
   - type: input
     id: project

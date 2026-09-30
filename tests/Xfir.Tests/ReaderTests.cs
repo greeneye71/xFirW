@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: AGPL-3.0-only
+// SPDX-License-Identifier: EUPL-1.2
 using System.IO.Compression;
 using System.Text;
 using Xfir.Core;

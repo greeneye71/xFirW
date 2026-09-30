@@ -49,6 +49,7 @@
             <TextBlock Text="DESTINATARIO" Style="{StaticResource Caption}" /><TextBlock x:Name="RecipientLabel" Text="—" Style="{StaticResource Detail}" />
             <TextBlock Text="CODICE EER" Style="{StaticResource Caption}" /><TextBlock x:Name="WasteLabel" Text="—" Style="{StaticResource Detail}" />
             <TextBlock Text="QUANTITÀ IN PARTENZA" Style="{StaticResource Caption}" /><TextBlock x:Name="QuantityLabel" Text="—" FontSize="26" FontWeight="SemiBold" />
+            <TextBlock Text="QUANTITÀ ACCETTATA" Style="{StaticResource Caption}" /><TextBlock x:Name="AcceptedQuantityLabel" Text="—" FontSize="26" FontWeight="SemiBold" ToolTip="Quantità registrata dal destinatario nella prima accettazione del formulario" />
             <Border BorderBrush="#E1E8F1" BorderThickness="0,1,0,0" Margin="0,22,0,0" Padding="0,14,0,0">
               <StackPanel><TextBlock Text="Verifiche" FontWeight="SemiBold" FontSize="13" />
                 <TextBlock Text="Controlli di lettura del contenitore. Validazione XSD e verifica completa delle firme non eseguite." TextWrapping="Wrap" Foreground="#68798E" FontSize="12" Margin="0,7,0,0" />
@@ -84,7 +85,10 @@
         </Grid>
       </Border>
     </Grid>
-    <Grid Grid.Row="3" Margin="24,0"><TextBlock x:Name="StatusLabel" Text="Pronto · Ctrl+O per aprire un formulario" VerticalAlignment="Center" Foreground="#68798E" FontSize="11" />
-      <TextBlock Text="0.1 · PROTOTIPO · AGPL-3.0" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="#68798E" FontSize="10" /></Grid>
+    <Grid Grid.Row="3" Margin="24,0">
+      <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+      <TextBlock x:Name="StatusLabel" Text="Pronto · Ctrl+O per aprire un formulario" VerticalAlignment="Center" Foreground="#68798E" FontSize="11" TextTrimming="CharacterEllipsis" Margin="0,0,20,0" />
+      <TextBlock x:Name="AuthorLabel" Grid.Column="1" VerticalAlignment="Center" Foreground="#68798E" FontSize="10" />
+    </Grid>
   </Grid>
 </Window>

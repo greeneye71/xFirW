@@ -1,6 +1,6 @@
 # Componenti di terzi
 
-Il codice originale di xFirW è AGPL-3.0-only. Le dipendenze mantengono le loro licenze. I pacchetti sono identificati dai file di progetto e dai `packages.lock.json`.
+Il codice originale di xFirW è distribuito sotto EUPL-1.2 (testo in `LICENSE`, versione italiana in `LICENSE-IT.txt`). Le dipendenze mantengono le loro licenze. I pacchetti sono identificati dai file di progetto e dai `packages.lock.json`.
 
 | Componente | Versione iniziale | Licenza / termini |
 | --- | --- | --- |

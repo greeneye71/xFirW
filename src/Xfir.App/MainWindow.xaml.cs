@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: AGPL-3.0-only
+// SPDX-License-Identifier: EUPL-1.2
 using System.ComponentModel;
 using System.IO;
 using System.Text;
@@ -27,6 +27,7 @@ public partial class MainWindow : Window
     public MainWindow(string? initialFile = null)
     {
         InitializeComponent();
+        AuthorLabel.Text = $"{AppInfo.Author} · xFirW {AppInfo.Version}";
         this.initialFile = initialFile;
     }
     private async void OnLoaded(object sender, RoutedEventArgs e)
@@ -78,6 +79,9 @@ public partial class MainWindow : Window
             RecipientLabel.Text = Value(current.Recipient);
             WasteLabel.Text = Value(FormFormatting.Eer(current.WasteCode));
             QuantityLabel.Text = Value((current.Quantity + " " + current.Unit).Trim());
+            var acceptedQuantity = current.Acceptance?.Get("QuantitaAccettata");
+            AcceptedQuantityLabel.Text = string.IsNullOrWhiteSpace(acceptedQuantity) ? "Non indicata"
+                : (FormFormatting.Quantity(acceptedQuantity) + " " + current.Acceptance?.Attribute("QuantitaAccettata", "unitaMisura")).Trim();
             FileLabel.Text = current.SourceName;
             WarningLabel.Text = string.Join("\n\n", current.Warnings);
             DataGrid.ItemsSource = current.Parts.SelectMany(p => p.Fields
@@ -180,8 +184,7 @@ public partial class MainWindow : Window
         catch (Exception ex) when (ex is InvalidOperationException or System.Runtime.InteropServices.COMException)
         { MessageBox.Show(this, "Stampa non disponibile. Esporta il PDF e aprilo con il tuo lettore PDF.\n\n" + ex.Message, "Stampa", MessageBoxButton.OK, MessageBoxImage.Warning); }
     }
-    private void OnAbout(object sender, RoutedEventArgs e) => MessageBox.Show(this,
-        "xFirW 0.1 · Prototipo\nCopyright © 2026 Giovanni Bergamaschi e contributori\n\nGNU AGPL versione 3 soltanto. Uso commerciale consentito; segnalazione volontaria. Nessuna garanzia.\n\nCodice sorgente e licenza:\nhttps://github.com/greeneye71/xFirW\nIl testo della licenza è incluso nel file LICENSE accanto all'eseguibile.\n\nVerifica completa delle firme non eseguita.\nProgetto indipendente, non affiliato al RENTRI.", "Informazioni su xFirW", MessageBoxButton.OK, MessageBoxImage.Information);
+    private void OnAbout(object sender, RoutedEventArgs e) => new AboutWindow { Owner = this }.ShowDialog();
 
     private void OnClosed(object? sender, EventArgs e)
     {

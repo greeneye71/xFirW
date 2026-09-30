@@ -62,9 +62,11 @@ Progetto indipendente, non affiliato al RENTRI o a Microsoft.
 
 Copyright (C) 2026 Giovanni Bergamaschi e i contributori di xFirW.
 
-Il codice e la documentazione originali del progetto sono distribuiti sotto **GNU Affero General Public License, versione 3 soltanto** (`AGPL-3.0-only`). Il testo completo è in [LICENSE](LICENSE). Il software è fornito senza garanzie, nei termini della licenza.
+Il codice e la documentazione originali del progetto sono distribuiti sotto la **Licenza pubblica dell'Unione europea, versione 1.2** (`EUPL-1.2`). Il testo è in [LICENSE](LICENSE) (inglese) e [LICENSE-IT.txt](LICENSE-IT.txt) (italiano); le versioni linguistiche ufficiali hanno pari valore. La licenza è regolata dalla legge italiana.
 
-L'uso commerciale è consentito senza royalty e senza richiedere un'autorizzazione. Le versioni derivate distribuite devono rispettare il copyleft e gli obblighi di disponibilità del codice sorgente corrispondente. Una versione modificata che supporta l'interazione remota tramite rete deve offrire il sorgente corrispondente agli utenti che vi interagiscono, come previsto dalla sezione 13. La licenza non impone la pubblicazione indiscriminata di tutte le modifiche private né l'invio delle modifiche a questo repository.
+Il software è gratuito e fornito «così com'è», senza garanzie e con l'esclusione di responsabilità prevista dagli articoli 7 e 8 della licenza. xFirW è soltanto uno strumento di visualizzazione e stampa: non sostituisce il formulario XFIR originale né i sistemi ufficiali RENTRI, sui quali l'utente deve verificare i dati.
+
+L'uso, anche commerciale, è consentito senza royalty e senza autorizzazione. Chi distribuisce versioni modificate, o ne rende disponibili online le funzionalità essenziali, deve farlo sotto EUPL-1.2 o una licenza compatibile elencata nell'appendice e rendere disponibile il codice sorgente. La licenza non impone di pubblicare modifiche private né di inviarle a questo repository.
 
 Se utilizzi xFirW in un progetto commerciale, ci farebbe piacere ricevere una [segnalazione volontaria](https://github.com/greeneye71/xFirW/issues/new?template=uso-commerciale.yml). È una richiesta di cortesia, non una condizione della licenza: non richiede approvazione e la mancata segnalazione non limita i diritti concessi. I dettagli sono in [COMMERCIAL_USE.md](COMMERCIAL_USE.md).
 
