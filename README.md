@@ -2,7 +2,7 @@
 
 Visualizzatore di formulari digitali XFIR per Windows, con anteprima, esportazione PDF e stampa.
 
-È disponibile un primo prototipo in C# / .NET 10 e WPF. Legge un XFIR locale, genera un PDF A4 e lo mostra nell'applicazione, con comandi per esportazione e stampa. Non è ancora un prodotto certificato per lo Store o un validatore completo RENTRI.
+xFirW è un'applicazione C# / .NET 10 e WPF. Legge un XFIR locale, genera un PDF A4 e lo mostra nell'applicazione, con comandi per esportazione e stampa. Non è un validatore completo RENTRI.
 
 Le funzioni implementate sono:
 
@@ -40,7 +40,7 @@ dotnet publish src/Xfir.App -c Release --no-restore -o artifacts/xFirW
 
 La cartella deve essere distribuita per intero, inclusi licenza e avvisi di terzi. Il workflow GitHub Actions compila, esegue i test e prepara lo stesso pacchetto come artefatto.
 
-## Limiti del prototipo
+## Limiti attuali
 
 - Il modello principale copre un trasporto terrestre e la prima accettazione. Gli eventi aggiuntivi vengono riportati in un'appendice dati, con avviso di rappresentazione parziale.
 - I testi troppo lunghi proseguono in appendice anziché essere eliminati.
@@ -48,7 +48,7 @@ La cartella deve essere distribuita per intero, inclusi licenza e avvisi di terz
 - Non sono eseguite validazione XSD, verifica completa XAdES, controllo delle revoche o interrogazioni RENTRI. Il QR viene riprodotto dai byte presenti, senza verificarne la firma COSE.
 - Gli allegati PDF sono elencati ma non ancora apribili/esportabili dall'interfaccia, né inclusi nella stampa del formulario.
 - La copia PDF non è firmata digitalmente e non sostituisce il file XFIR originale.
-- Il prototipo non salva una cronologia dei documenti. I PDF temporanei sono eliminati alla chiusura regolare della sessione, quando non bloccati da altri processi.
+- xFirW non salva una cronologia dei documenti. I PDF temporanei sono eliminati alla chiusura regolare della sessione, quando non bloccati da altri processi.
 
 L'apertura e la rappresentazione dei documenti sono progettate per funzionare localmente, senza richiedere un account RENTRI. La verifica completa delle firme e dello stato online del formulario è una funzionalità distinta dalla visualizzazione.
 

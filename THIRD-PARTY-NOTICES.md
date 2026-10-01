@@ -9,7 +9,7 @@ Il codice originale di xFirW è distribuito sotto EUPL-1.2 (testo in `LICENSE`, 
 | Microsoft.Web.WebView2 | 1.0.3537.50 | Termini Microsoft del pacchetto NuGet e del runtime |
 | .NET / WPF | 10 | Licenze e avvisi della distribuzione Microsoft .NET |
 
-La cartella `third-party` contiene le licenze e gli avvisi dei componenti distribuiti, incluse le dipendenze transitive Microsoft.Extensions.DependencyInjection.Abstractions e Microsoft.Extensions.Logging.Abstractions. Questa cartella viene copiata accanto all'eseguibile e deve essere mantenuta nelle distribuzioni. Il runtime WebView2 Evergreen è un prerequisito separato e non viene incluso in questa prima pubblicazione del prototipo.
+La cartella `third-party` contiene le licenze e gli avvisi dei componenti distribuiti, incluse le dipendenze transitive Microsoft.Extensions.DependencyInjection.Abstractions e Microsoft.Extensions.Logging.Abstractions. Questa cartella viene copiata accanto all'eseguibile e deve essere mantenuta nelle distribuzioni. Il runtime WebView2 Evergreen è un prerequisito separato e non viene incluso nel pacchetto.
 
 Il generatore PDF legge i caratteri Arial installati con Windows. Non distribuisce file di font nel repository. I formulari e i dati degli utenti non sono parte del codice del progetto.
 
