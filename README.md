@@ -2,6 +2,8 @@
 
 Visualizzatore di formulari digitali XFIR per Windows, con anteprima, esportazione PDF e stampa.
 
+**Stato di manutenzione:** questa linea Windows riceverà soltanto correzioni di bug e vulnerabilità. Lo sviluppo della nuova piattaforma Linux e del servizio di conversione tramite posta prosegue nel repository separato [xFirMail](https://github.com/greeneye71/xFirMail), derivato da questo progetto.
+
 Versione corrente: **1.0.2** (pacchetto Microsoft Store **1.0.2.0**). Le modifiche dalla prima release Store sono riportate nel [changelog](CHANGELOG.md).
 
 xFirW è un'applicazione C# / .NET 10 e WPF. Legge un XFIR locale, genera un PDF A4 e lo mostra nell'applicazione, con comandi per esportazione e stampa. Non è un validatore completo RENTRI.
